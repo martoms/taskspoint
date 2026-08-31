@@ -1,0 +1,119 @@
+<main id="main-content" class="editor-shell">
+  @if (isEditing && !existingTask) {
+    <section class="not-found-state" aria-labelledby="not-found-title">
+      <p class="eyebrow">TASK NOT FOUND</p>
+      <h1 id="not-found-title">This task may have moved.</h1>
+      <p>Return to your list and choose another task to edit.</p>
+      <a class="button button-secondary" routerLink="/tasks">Back to tasks</a>
+    </section>
+  } @else {
+    <a class="back-link" routerLink="/tasks">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="m12.5 4-6 6 6 6M7 10h10" />
+      </svg>
+      Back to tasks
+    </a>
+
+    <section class="editor-card" aria-labelledby="editor-title">
+      <div class="editor-heading">
+        <p class="eyebrow">{{ isEditing ? 'REFINE THE DETAILS' : 'A LITTLE MOMENTUM' }}</p>
+        <h1 id="editor-title">{{ isEditing ? 'Edit your task' : 'Add a new task' }}</h1>
+        <p>
+          {{
+            isEditing
+              ? 'Make any changes you need and save when you are ready.'
+              : 'Capture the next thing you want to move forward.'
+          }}
+        </p>
+      </div>
+
+      <form class="task-form" [formRoot]="taskForm">
+        <div class="form-field">
+          <label for="task-title">
+            Task title <span class="required-mark" aria-hidden="true">*</span>
+          </label>
+          <input
+            id="task-title"
+            type="text"
+            autocomplete="off"
+            placeholder="For example, prepare the project update"
+            [formField]="taskForm.title"
+            [attr.aria-invalid]="taskForm.title().touched() && taskForm.title().invalid()"
+            [attr.aria-describedby]="
+              taskForm.title().touched() && taskForm.title().invalid()
+                ? 'task-title-error'
+                : 'task-title-hint'
+            "
+          />
+          <p id="task-title-hint" class="field-hint">Keep it clear and easy to scan.</p>
+          @if (taskForm.title().touched() && taskForm.title().invalid()) {
+            <p id="task-title-error" class="field-error" role="alert">
+              {{ taskForm.title().errors()[0]?.message }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="task-description">Details <span class="optional-label">Optional</span></label>
+          <textarea
+            id="task-description"
+            rows="4"
+            placeholder="Add a note or a useful next step"
+            [formField]="taskForm.description"
+            [attr.aria-invalid]="
+              taskForm.description().touched() && taskForm.description().invalid()
+            "
+            [attr.aria-describedby]="
+              taskForm.description().touched() && taskForm.description().invalid()
+                ? 'task-description-error'
+                : 'task-description-hint'
+            "
+          ></textarea>
+          <p id="task-description-hint" class="field-hint">
+            A short note can make it easier to pick this back up.
+          </p>
+          @if (taskForm.description().touched() && taskForm.description().invalid()) {
+            <p id="task-description-error" class="field-error" role="alert">
+              {{ taskForm.description().errors()[0]?.message }}
+            </p>
+          }
+        </div>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority" [formField]="taskForm.priority">
+              @for (priority of priorities; track priority) {
+                <option [value]="priority">{{ priorityLabels[priority] }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="task-status">Status</label>
+            <select id="task-status" [formField]="taskForm.status">
+              @for (status of statuses; track status) {
+                <option [value]="status">{{ statusLabels[status] }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field due-date-field">
+          <label for="task-due-date">Due date <span class="optional-label">Optional</span></label>
+          <input id="task-due-date" type="date" [formField]="taskForm.dueDate" />
+        </div>
+
+        <div class="form-actions">
+          <a class="button button-secondary" routerLink="/tasks">Cancel</a>
+          <button class="button button-primary" type="submit">
+            {{ isEditing ? 'Save changes' : 'Create task' }}
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M4 10h12m-5-5 5 5-5 5" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </section>
+  }
+</main>

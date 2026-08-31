@@ -1,18 +1,25 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
+    localStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
-  it('renders the Taskflow workspace shell', () => {
+  it('renders the shared navigation and task workspace shell', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('h1')?.textContent).toContain('Taskflow is ready.');
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.brand')?.textContent).toContain('Taskflow');
+    expect(compiled.querySelector('nav')?.getAttribute('aria-label')).toBe('Main navigation');
   });
 });
