@@ -17,5 +17,9 @@ Open [http://localhost:4200](http://localhost:4200). Tasks are stored in this br
 
 ```sh
 npm test
+npm run e2e
 npm run build
+npm run format:check
 ```
+
+Unit and component tests use Vitest. Playwright covers the main task flows in Chromium.

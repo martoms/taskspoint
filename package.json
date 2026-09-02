@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false",
-    "format:check": "prettier --check \"src/**/*.{ts,html,scss}\" README.md package.json"
+    "e2e": "playwright test",
+    "ui:review": "node scripts/capture-ui-review.cjs",
+    "format:check": "prettier --check \"src/**/*.{ts,html,scss}\" \"e2e/**/*.ts\" \"scripts/**/*.cjs\" playwright.config.ts README.md package.json"
   },
   "private": true,
   "packageManager": "npm@11.8.0",
@@ -25,6 +27,7 @@
     "@angular/build": "^22.3.0",
     "@angular/cli": "^22.3.0",
     "@angular/compiler-cli": "^22.3.0",
+    "@playwright/test": "^1.65.1",
     "jsdom": "^31.0.0",
     "prettier": "^3.8.1",
     "typescript": "~6.0.2",
