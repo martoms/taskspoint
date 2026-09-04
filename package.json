@@ -9,7 +9,7 @@
     "test": "ng test --watch=false",
     "e2e": "playwright test",
     "ui:review": "node scripts/capture-ui-review.cjs",
-    "format:check": "prettier --check \"src/**/*.{ts,html,scss}\" \"e2e/**/*.ts\" \"scripts/**/*.cjs\" playwright.config.ts README.md package.json"
+    "format:check": "prettier --check \"src/**/*.{ts,html,scss}\" \"e2e/**/*.ts\" \"docs/**/*.md\" \"scripts/**/*.cjs\" playwright.config.ts README.md package.json"
   },
   "private": true,
   "packageManager": "npm@11.8.0",
